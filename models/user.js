@@ -23,11 +23,11 @@ const userSchema = new mongoose.Schema({
 
 userSchema.pre('save', async function (next) {
    try {
-       if (!this.modified('password')) {
+       if (!this.isModified('password')) {
            return next() // don't go and hash it again
        }
        let hashedPassword = await bcypt.hash(this.password, 10);
-       this.password = password;
+       this.password = hashedPassword;
        return next();
    } catch (e) {
         return next(e)
