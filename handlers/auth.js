@@ -38,8 +38,43 @@ exports.signup = async function(req, res, next) {
 
 exports.signin = async function(req, res, next) {
     try {
-
+        // find a user
+        const user = await db.User.findOne({
+            email: req.body.email
+        });
+        if (!user) {
+            return next({
+                status: 400,
+                message: 'User not found'
+            })
+        }
+        let { id, username, profileImageUrl } = user;
+        const isMatch = await user.comparePassword(req.body.password);
+        if (isMatch) {
+            const token = jwt.sign({
+                id,
+                username,
+                profileImageUrl
+            },  process.env.SECRET_KEY);
+            return res.status(200).json({
+                id,
+                username,
+                profileImageUrl,
+                token
+            })
+        } else {
+            return next({
+                status: 400,
+                message: 'Invalid assword'
+            })
+        }
+        // check if the pw matches what was sent to the server
+        // if it all matches
+        // log them im using jwt
     } catch (err) {
-
+        return next({
+            status: 500,
+            message: 'Something went wrong: ' + JSON.stringify(err)
+        })
     }
 };

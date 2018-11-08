@@ -34,12 +34,12 @@ userSchema.pre('save', async function (next) {
    }
 });
 
-userSchema.method.comparePassword = async function (candidatePassword, next) {
+userSchema.methods.comparePassword = async function (candidatePassword, next) {
   try {
       let isMatch = await bcypt.compare(candidatePassword, this.password);
       return isMatch;
   } catch(e) {
-      next(e);
+      return next(e);
   }
 };
 
