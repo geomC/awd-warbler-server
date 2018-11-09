@@ -4,6 +4,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const errorHandler = require('./handlers/error');
 const authRoutes = require('./routes/auth');
+const messagesRoutes = require('./routes/messages');
 
 const PORT = 8081;
 const app = express();
@@ -12,7 +13,7 @@ app.use(bodyParser.json());
 
 // all routes
 app.use('/api/auth', authRoutes);
-
+app.use('/api/users/:id/messages', messagesRoutes);
 
 // error middleware (top level error handling)
 
