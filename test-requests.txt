@@ -1,0 +1,21 @@
+
+# SIGNUP
+C:\Python34\Scripts\http POST http://localhost:8081/api/auth/signup username=karlheinz email=karl@heinz.de password=Passwort
+
+# SIGNIN
+C:\Python34\Scripts\http POST http://localhost:8081/api/auth/signin email=karl@heinz.de password=Passwort
+
+Now note the returned user id as well as the JWT, e.g. "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
+eyJpZCI6IjViZTZjYzJkNmQ0OWM1MmY4ODFlMDQ3OCIsInVzZXJuYW1lIjoia2FybGhlaW56IiwiaWF0IjoxNTQxODUyMjgyfQ
+.E4rrQP_u7I6UsFst8OTyMipZPuZb-3wg5UoBWOrXitk"
+
+You can inspect the payload in https://jwt.io/ using the Salt stated in .env
+
+# CREATE MESSAGE (Replace token and user ID)
+C:\Python34\Scripts\http --auth-type=jwt --auth="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViZTZjYzJkNmQ0OWM1MmY4ODFlMDQ3OCIsInVzZXJuYW1lIjoia2FybGhlaW56IiwiaWF0IjoxNTQxODUyMjgyfQ.E4rrQP_u7I6UsFst8OTyMipZPuZb-3wg5UoBWOrXitk" POST http://localhost:8081/api/users/5be6cc2d6d49c52f881e0478/messages text=sampleMessage
+
+# GET ALL MESSAGES
+C:\Python34\Scripts\http --auth-type=jwt --auth="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViZTZjYzJkNmQ0OWM1MmY4ODFlMDQ3OCIsInVzZXJuYW1lIjoia2FybGhlaW56IiwiaWF0IjoxNTQxODUyMjgyfQ.E4rrQP_u7I6UsFst8OTyMipZPuZb-3wg5UoBWOrXitk" GET http://localhost:8081/api/messages
+
+
+Try adding a user named hacker and use its token to create messages for Karlheinzes ID!
