@@ -20,10 +20,12 @@ const messageSchema = new mongoose.Schema({
 // whenever a message is deleted, remove reference in User schema
 messageSchema.pre('remove', async function (next) {
     try {
+
         // find a user
-        const user = await User.findById(this.userId);
+        const user = await User.findById(this.user);
+
         // remove the id of the message from their messages list
-        user.message.remove(this.id); // works like splice
+        user.messages.remove(this.id); // works like splice
         // save that user
         await user.save();
         // return next

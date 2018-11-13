@@ -65,7 +65,7 @@ exports.signin = async function(req, res, next) {
         } else {
             return next({
                 status: 400,
-                message: 'Invalid assword'
+                message: 'Invalid Password'
             })
         }
         // check if the pw matches what was sent to the server
